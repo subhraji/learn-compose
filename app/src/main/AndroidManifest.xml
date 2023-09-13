@@ -13,9 +13,9 @@
         android:theme="@style/Theme.JetpackComposeCrashCourse"
         tools:targetApi="31">
         <activity
-            android:name=".ProtoDataStoreActivity"
+            android:name=".room.ui.RoomHomeActivity"
             android:exported="true"
-            android:label="@string/title_activity_proto_data_store"
+            android:label="@string/title_activity_room_home"
             android:theme="@style/Theme.JetpackComposeCrashCourse">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ProtoDataStoreActivity"
+            android:exported="true"
+            android:label="@string/title_activity_proto_data_store"
+            android:theme="@style/Theme.JetpackComposeCrashCourse"/>
+        <activity
             android:name=".DataStoreExampleActivity"
             android:exported="true"
             android:label="@string/title_activity_data_store_example"
-            android:theme="@style/Theme.JetpackComposeCrashCourse"/>
+            android:theme="@style/Theme.JetpackComposeCrashCourse" />
         <activity
             android:name=".DataStoreCryptoActivity"
             android:exported="true"
