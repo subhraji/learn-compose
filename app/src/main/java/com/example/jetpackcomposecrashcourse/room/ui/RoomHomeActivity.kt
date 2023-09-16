@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.jetpackcomposecrashcourse.room.db.UserDatabase
+import com.example.jetpackcomposecrashcourse.room.model.School
 import com.example.jetpackcomposecrashcourse.room.model.User
 import com.example.jetpackcomposecrashcourse.room.ui.ui.theme.JetpackComposeCrashCourseTheme
 import kotlinx.coroutines.launch
@@ -24,23 +25,20 @@ class RoomHomeActivity : ComponentActivity() {
             applicationContext,
             UserDatabase::class.java,
             "user.db"
-        ).build()
+        ).addMigrations(UserDatabase.migration3To4).build()
 
         lifecycleScope.launch {
-            db.dao.getUsers().forEach(::println)
+            db.dao.getSchool().forEach(::println)
         }
 
         /*(1..10).forEach{
             lifecycleScope.launch {
-                db.dao.insertUser(
-                    User(
-                        email = "testEmail@test$it.com",
-                        userName = "test$it"
+                db.dao.insertSchool(
+                    School(
+                        name = "test$it"
                     )
                 )
             }
         }*/
-
-
     }
 }
