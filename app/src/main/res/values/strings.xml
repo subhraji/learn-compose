@@ -5,4 +5,5 @@
     <string name="title_activity_data_store_example">DataStoreExampleActivity</string>
     <string name="title_activity_proto_data_store">ProtoDataStoreActivity</string>
     <string name="title_activity_room_home">RoomHomeActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>
