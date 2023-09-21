@@ -27,9 +27,9 @@ class RoomHomeActivity : ComponentActivity() {
             "user.db"
         ).addMigrations(UserDatabase.migration3To4).build()
 
-        lifecycleScope.launch {
+        /*lifecycleScope.launch {
             db.dao.getSchool().forEach(::println)
-        }
+        }*/
 
         /*(1..10).forEach{
             lifecycleScope.launch {
