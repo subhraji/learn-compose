@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
@@ -32,15 +34,29 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import coil.compose.rememberImagePainter
+import com.example.jetpackcomposecrashcourse.connectivity.ConnectivityObserver
+import com.example.jetpackcomposecrashcourse.connectivity.NetworkConnectivityObserver
 import com.example.jetpackcomposecrashcourse.workmanager.service.ColorFilterWorker
 import com.example.jetpackcomposecrashcourse.workmanager.service.DownloadWorker
 import com.example.jetpackcomposecrashcourse.workmanager.ui.theme.JetpackComposeCrashCourseTheme
 import com.example.jetpackcomposecrashcourse.workmanager.util.WorkerKeys
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class HomeActivity : ComponentActivity() {
+
+    private lateinit var connectivityObserver: ConnectivityObserver
     @SuppressLint("UnrememberedMutableState")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //network check
+        connectivityObserver = NetworkConnectivityObserver(applicationContext)
+        //network status observe for non compose
+        connectivityObserver.observe().onEach {
+            println("Network status: $it")
+        }.launchIn(lifecycleScope)
+
         val downloadRequest = OneTimeWorkRequestBuilder<DownloadWorker>()
             .setConstraints(
                 Constraints.Builder()
@@ -54,6 +70,12 @@ class HomeActivity : ComponentActivity() {
         val workManager = WorkManager.getInstance(applicationContext)
         setContent {
             JetpackComposeCrashCourseTheme {
+                //network status observe for compose
+                val status by connectivityObserver.observe().collectAsState(
+                    initial = ConnectivityObserver.Status.UnAvailable
+                )
+
+
                 val workInfos = workManager
                     .getWorkInfosForUniqueWorkLiveData("download")
                     .observeAsState()
@@ -82,6 +104,8 @@ class HomeActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Text(text = "Network status: $status")
+
                     imageUri?.let { uri ->
                         Image(painter = rememberImagePainter(
                             data = uri
