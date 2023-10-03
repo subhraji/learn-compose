@@ -6,4 +6,5 @@
     <string name="title_activity_proto_data_store">ProtoDataStoreActivity</string>
     <string name="title_activity_room_home">RoomHomeActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home2">HomeActivity2</string>
 </resources>

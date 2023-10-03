@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".workmanager.DownloadApplication"
         android:allowBackup="true"
@@ -15,21 +19,32 @@
         android:theme="@style/Theme.JetpackComposeCrashCourse"
         tools:targetApi="31">
         <activity
-            android:name=".workmanager.ui.HomeActivity"
+            android:name=".workmanager_2.HomeActivity2"
             android:exported="true"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.JetpackComposeCrashCourse">
+            android:label="@string/title_activity_home2"
+            android:theme="@style/Theme.JetpackComposeCrashCourse"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="image/*"/>
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".workmanager.ui.HomeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.JetpackComposeCrashCourse"/>
         <activity
             android:name=".room.ui.RoomHomeActivity"
             android:exported="true"
             android:label="@string/title_activity_room_home"
-            android:theme="@style/Theme.JetpackComposeCrashCourse"></activity>
+            android:theme="@style/Theme.JetpackComposeCrashCourse" />
         <activity
             android:name=".ProtoDataStoreActivity"
             android:exported="true"
@@ -54,6 +69,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.JetpackComposeCrashCourse"/>
+            android:theme="@style/Theme.JetpackComposeCrashCourse" />
     </application>
+
 </manifest>
